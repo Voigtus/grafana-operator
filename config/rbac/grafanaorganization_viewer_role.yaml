@@ -1,0 +1,20 @@
+# permissions for end users to view grafanaorganizations.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: grafanaorganization-viewer-role
+rules:
+- apiGroups:
+  - integreatly.org
+  resources:
+  - grafanaorganizations
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - integreatly.org
+  resources:
+  - grafanaorganizations/status
+  verbs:
+  - get

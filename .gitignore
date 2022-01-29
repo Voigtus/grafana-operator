@@ -83,3 +83,4 @@ operator-sdk-*
 tmp
 ./bin/manager
 vendor
+**/**.iml

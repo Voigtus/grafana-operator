@@ -33,6 +33,7 @@ import (
 	"github.com/grafana-operator/grafana-operator/v4/controllers/grafana"
 	"github.com/grafana-operator/grafana-operator/v4/controllers/grafanadashboard"
 	"github.com/grafana-operator/grafana-operator/v4/controllers/grafanadatasource"
+	"github.com/grafana-operator/grafana-operator/v4/controllers/grafanaorganization"
 	"github.com/grafana-operator/grafana-operator/v4/internal/k8sutil"
 	"github.com/grafana-operator/grafana-operator/v4/version"
 	routev1 "github.com/openshift/api/route/v1"
@@ -245,6 +246,13 @@ func main() { // nolint
 		Recorder: mgr.GetEventRecorderFor("GrafanaDatasource"),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "GrafanaDatasource")
+		os.Exit(1)
+	}
+	if err = (&grafanaorganization.GrafanaOrganizationReconciler{
+		Client: mgr.GetClient(),
+		Scheme: mgr.GetScheme(),
+	}).SetupWithManager(mgr); err != nil {
+		setupLog.Error(err, "unable to create controller", "controller", "GrafanaOrganization")
 		os.Exit(1)
 	}
 	// +kubebuilder:scaffold:builder
